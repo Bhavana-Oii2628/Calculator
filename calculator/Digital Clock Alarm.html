@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock & Alarm (IST - India)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+            padding: 50px;
+        }
+        #clock {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Digital Clock & Alarm ⏰ (IST - India)</h1>
+    <div id="clock">00:00:00</div>
+    <input type="time" id="alarmTime">
+    <button id="setAlarm">Set Alarm</button>
+    <button id="stopAlarm" style="display:none;">Stop Alarm</button>
+
+    <script>
+        // Get elements
+        const clock = document.getElementById("clock");
+        const alarmTimeInput = document.getElementById("alarmTime");
+        const setAlarmBtn = document.getElementById("setAlarm");
+        const stopAlarmBtn = document.getElementById("stopAlarm");
+        const alarmSound = new Audio("https://www.soundjay.com/button/beep-07.wav");
+        alarmSound.loop = true; // Make the alarm sound loop
+
+        let alarmTime = null;
+        let alarmTriggered = false;
+
+        // Function to get India (IST) time
+        function getIndiaTime() {
+            let now = new Date();
+            let indiaTime = new Intl.DateTimeFormat("en-GB", {
+                timeZone: "Asia/Kolkata",
+                hour12: false,
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            }).format(now);
+            return indiaTime;
+        }
+
+        // Function to update clock
+        function updateClock() {
+            const [hours, minutes, seconds] = getIndiaTime().split(":");
+            clock.innerText = `${hours}:${minutes}:${seconds}`;
+            
+            // Check alarm and prevent multiple triggers
+            if (alarmTime && `${hours}:${minutes}` === alarmTime && !alarmTriggered) {
+                alarmSound.play();
+                alert("Alarm ringing! Wake up! ⏰");
+                alarmTriggered = true;
+                stopAlarmBtn.style.display = "inline-block";
+            }
+        }
+
+        // Set alarm function
+        setAlarmBtn.addEventListener("click", () => {
+            let selectedTime = alarmTimeInput.value;
+            if (selectedTime) {
+                let [setHours, setMinutes] = selectedTime.split(":");
+                let istTime = getIndiaTime().split(":");
+                let istHours = istTime[0];
+                let istMinutes = istTime[1];
+
+                // Convert input time to 24-hour format based on IST
+                if (parseInt(setHours) < 10) {
+                    setHours = "0" + parseInt(setHours);
+                }
+                if (parseInt(setMinutes) < 10) {
+                    setMinutes = "0" + parseInt(setMinutes);
+                }
+
+                alarmTime = `${setHours}:${setMinutes}`;
+                alert(`Alarm set for ${alarmTime} IST ⏰`);
+                alarmTriggered = false; // Reset trigger for next alarm
+                stopAlarmBtn.style.display = "none";
+            }
+        });
+
+        // Stop alarm function
+        stopAlarmBtn.addEventListener("click", () => {
+            alarmSound.pause();
+            alarmSound.currentTime = 0;
+            stopAlarmBtn.style.display = "none";
+        });
+
+        // Update clock every second
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call
+    </script>
+</body>
+</html>
+
+
+
+

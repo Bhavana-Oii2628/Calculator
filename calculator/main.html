@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JS Calculator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(rgba(15, 32, 39, 0.8), rgba(44, 83, 100, 0.8)),
+                  url('https://png.pngtree.com/png-clipart/20230913/original/pngtree-calculating-clipart-cartoon-girl-with-glasses-doing-calculations-on-an-electronic-png-image_11055596.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .calculator {
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      width: 300px;
+    }
+
+    #display {
+      width: 100%;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      padding: 10px;
+      text-align: right;
+      border: none;
+      background: #eee;
+      border-radius: 5px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      gap: 10px;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 15px;
+      border: none;
+      border-radius: 5px;
+      background: #333;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #444;
+    }
+
+    #size-display {
+      color: #0ff;
+      font-size: 0.9rem;
+      text-align: right;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" disabled />
+    <div id="size-display"></div>
+    <div class="buttons">
+      <button onclick="clearDisplay()">AC</button>
+      <button onclick="appendValue('/')">/</button>
+      <button onclick="appendValue('*')">*</button>
+      <button onclick="appendValue('-')">-</button>
+
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button onclick="appendValue('+')">+</button>
+
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button onclick="calculate()">=</button>
+
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+
+      <button onclick="appendValue('0')">0</button>
+      <button onclick="appendValue('.')">.</button>
+    </div>
+  </div>
+
+  <!-- 🎵 Sound to play when answer is calculated -->
+  <audio id="success-sound" src="https://www.soundjay.com/button/beep-07.mp3"></audio>
+
+  <script>
+    const display = document.getElementById('display');
+    const sizeDisplay = document.getElementById('size-display');
+    const successSound = document.getElementById('success-sound');
+
+    function appendValue(value) {
+      display.value += value;
+      sizeDisplay.textContent = '';
+    }
+
+    function clearDisplay() {
+      display.value = '';
+      sizeDisplay.textContent = '';
+    }
+
+    function calculate() {
+      try {
+        const result = eval(display.value);
+        display.value = result;
+        const byteSize = new Blob([result.toString()]).size;
+        sizeDisplay.textContent = `Size: ${byteSize} byte${byteSize > 1 ? 's' : ''}`;
+
+        // 🎶 Play sound when result is calculated
+        successSound.currentTime = 0;
+        successSound.play();
+
+      } catch {
+        display.value = 'Error';
+        sizeDisplay.textContent = '';
+      }
+    }
+  </script>
+</body>
+</html>
