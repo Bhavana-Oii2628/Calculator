@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(rgba(15, 32, 39, 0.7), rgba(44, 83, 100, 0.7)),
+                  url('https://png.pngtree.com/png-clipart/20230913/original/pngtree-calculating-clipart-cartoon-girl-with-glasses-doing-calculations-on-an-electronic-png-image_11055596.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #0f2027;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .top-title {
+      position: absolute;
+      top: 20px; /* 👈 Moves the title down a bit */
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 2.7rem;
+      color: #ffffff;
+      font-weight: bold;
+      animation: colorChange 4s infinite, glowShadow 2s ease-in-out infinite alternate;
+    }
+
+    .logo {
+      width: 130px;
+      height: auto;
+      margin-top: auto;
+      margin-bottom: auto;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .btn-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      bottom: 40px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      background-color: #00ffff;
+      color: #003333;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 25px;
+      transition: 0.3s;
+      box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    }
+
+    .btn:hover {
+      background-color: #1de9b6;
+      color: #000;
+      box-shadow: 0 0 15px #1de9b6, 0 0 25px #1de9b6;
+    }
+
+    @keyframes colorChange {
+      0%   { color: #00ffff; }
+      25%  { color: #1de9b6; }
+      50%  { color: #00bcd4; }
+      75%  { color: #76f2f2; }
+      100% { color: #00ffff; }
+    }
+
+    @keyframes glowShadow {
+      from {
+        text-shadow: 0 0 5px #00ffff, 0 0 10px #1de9b6, 0 0 15px #20f3f3;
+      }
+      to {
+        text-shadow: 0 0 10px #b2ffff, 0 0 20px #76f2f2, 0 0 30px #40e0d0;
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎯 Title Slightly Down from Top -->
+  <div class="top-title">Welcome to My Calculator</div>
+
+  <!-- 🧠 Logo in Center -->
+  <div style="flex: 1; display: flex; align-items: center;">
+    <img src="https://png.pngtree.com/png-vector/20220727/ourmid/pngtree-calculator-icon-png-image_6071782.png" alt="Calculator Logo" class="logo" />
+  </div>
+
+  <!-- 👇 Enter Button at the Bottom -->
+  <div class="btn-container">
+    <a href="main.html" class="btn">Enter</a>
+  </div>
+
+</body>
+</html>
